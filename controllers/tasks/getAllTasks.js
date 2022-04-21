@@ -5,9 +5,16 @@ import Task from "../../models/taskModel.js";
 // Desc: to get all tasks from DB(Admins Only)
 const getAllTasks = async (req, res, next) => {
   try {
-    const tasks = await Task.find({}).populate("owner");
+    const pageSize = 10;
+    const page = Number(req.query.pageNumber) || 1;
 
-    return res.json(tasks);
+    const count = await Task.countDocuments({});
+    const tasks = await Task.find({})
+      .populate("owner")
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+
+    return res.json({ tasks, page, pages: Math.ceil(count / pageSize) });
   } catch (error) {
     return next(error);
   }

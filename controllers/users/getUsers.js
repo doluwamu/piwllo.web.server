@@ -5,8 +5,14 @@ import User from "../../models/userModel.js";
 // Desc: to get all users from DB(Admins Only)
 const getUsers = async (req, res, next) => {
   try {
-    const users = await User.find({});
-    return res.json(users);
+    const pageSize = 5;
+    const page = Number(req.query.pageNumber) || 1;
+
+    const count = await User.countDocuments({});
+    const users = await User.find({})
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+    return res.json({ users, page, pages: Math.ceil(count / pageSize) });
   } catch (error) {
     return next(error);
   }

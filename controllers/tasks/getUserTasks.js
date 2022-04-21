@@ -63,13 +63,18 @@ export const getTaskByPriority = async (req, res, next) => {
   try {
     const { priority } = req.params;
     const user = req.user;
+    const pageSize = 10;
+    const page = Number(req.query.pageNumber) || 1;
 
+    const count = await Task.countDocuments({ owner: user.id, rank: priority });
     const tasks = await Task.find({
       owner: user.id,
       rank: priority.toLowerCase(),
-    });
+    })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
 
-    return res.json(tasks);
+    return res.json({ tasks, page, pages: Math.ceil(count / pageSize) });
   } catch (error) {
     return next(error);
   }

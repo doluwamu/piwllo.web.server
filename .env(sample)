@@ -1,0 +1,8 @@
+NODE_ENV = Your environment e.g development or production
+PORT = Your app's running port
+MONGO_URL = Your mongoDB connection string
+JWT_SECRET = Your json web token secret
+JWT_EXPIRES = jwt expiry time
+CLOUDINARY_NAME = Your cloudinary name
+CLOUDINARY_KEY = Your cloudinary key
+CLOUDINARY_SECRET = Your cloudinary secret
