@@ -31,14 +31,15 @@ router.post("", isAuthenticated, singleUploadCtrl, async (req, res, next) => {
 
     const file64 = bufferToBase64(req.file);
     const result = await cloudUpload(file64.content);
-    const uploadedFileEdit = cloudinaryV2.url(result.secure_url, {
-      width: 400,
-      height: 400,
-      crop: "thumb",
-      gravity: "face",
-    });
+    console.log(result);
+    // const uploadedFileEdit = cloudinaryV2.url(result.secure_url, {
+    //   width: 400,
+    //   height: 400,
+    //   crop: "thumb",
+    //   gravity: "face",
+    // });
     const cImage = new CloudinaryImage({
-      url: uploadedFileEdit,
+      url: result.secure_url,
       cloudinaryId: result.public_id,
     });
 
@@ -46,7 +47,6 @@ router.post("", isAuthenticated, singleUploadCtrl, async (req, res, next) => {
     return res.json({
       _id: savedImage.id,
       url: savedImage.url,
-      uploadedFileEdit,
     });
   } catch (error) {
     return next(new AppError(error.message, 500));
