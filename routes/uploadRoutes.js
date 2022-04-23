@@ -31,7 +31,6 @@ router.post("", isAuthenticated, singleUploadCtrl, async (req, res, next) => {
 
     const file64 = bufferToBase64(req.file);
     const result = await cloudUpload(file64.content);
-    console.log(result);
     // const uploadedFileEdit = cloudinaryV2.url(result.secure_url, {
     //   width: 400,
     //   height: 400,
