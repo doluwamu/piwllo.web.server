@@ -1,5 +1,5 @@
 import express from "express";
-import { isAuthenticated } from "../middlewares/auth.js";
+// import { isAuthenticated } from "../middlewares/auth.js";
 import { bufferToBase64 } from "../services/dataUri.js";
 import { cloudUpload } from "../services/cloudinary.js";
 import CloudinaryImage from "../models/cloudinaryImageModel.js";
@@ -23,7 +23,7 @@ const singleUploadCtrl = (req, res, next) => {
 // Request type: POST
 // To: /api/v1/upload
 // Desc: to upload a file to cloudinary and store the url and id in the DB
-router.post("", isAuthenticated, singleUploadCtrl, async (req, res, next) => {
+router.post("", singleUploadCtrl, async (req, res, next) => {
   try {
     if (!req.file) {
       throw new Error("Image is not presented!");

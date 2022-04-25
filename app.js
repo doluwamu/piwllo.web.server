@@ -5,7 +5,6 @@ import errorHandler from "./error/errorHandler.js";
 import AppError from "./error/appError.js";
 import morgan from "morgan";
 import dotenv from "dotenv";
-// import Task from "./models/taskModel.js";
 
 dotenv.config();
 
@@ -25,15 +24,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+const __dirname = path.resolve();
+
 if (NODE_ENV === "development") {
   app.use(morgan("dev"));
-}
 
-app.get("/", (req, res) => {
-  res.status(200).json({
-    message: "Hello there",
+  app.get("/", (req, res) => {
+    return res.status(200).json({
+      message: "Hello there",
+    });
   });
-});
+}
 
 //setting up all routers
 app.use("/api/v1/auth", authRoutes);
@@ -42,6 +43,14 @@ app.use("/api/v1/tasks", taskRoutes);
 app.use("/api/v1/teams", teamRoutes);
 app.use("/api/v1/upload", uploadRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
+
+// Production initial route
+if (NODE_ENV === "production") {
+  app.get("/", (req, res) => {
+    app.use(express.static(path.join(__dirname, "/public")));
+    return res.sendFile(`${__dirname}/public/index.html`);
+  });
+}
 
 //for invalid route
 app.use((req, res, next) => {

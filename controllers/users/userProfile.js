@@ -60,6 +60,8 @@ export const updateProfile = async (req, res, next) => {
     user.password = password || user.password;
     user.image = image || user.image;
 
+    await user.populate("image");
+
     await user.save();
 
     return res.json({

@@ -16,7 +16,7 @@ const signIn = async (req, res, next) => {
       return next(new AppError("password is required!", 400));
     }
 
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email: email.toLowerCase() })
       .select("+password")
       .populate("image", "-createdAt -updatedAt");
 
