@@ -5,7 +5,7 @@ import Task from "../../models/taskModel.js";
 // Desc: to get all tasks from DB(Admins Only)
 const getAllTasks = async (req, res, next) => {
   try {
-    const pageSize = 10;
+    const pageSize = 20;
     const page = Number(req.query.pageNumber) || 1;
 
     const count = await Task.countDocuments({});

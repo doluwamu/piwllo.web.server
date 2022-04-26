@@ -12,7 +12,6 @@ const userSchema = new Schema(
     image: {
       type: Schema.Types.ObjectId,
       ref: CLOUDINARYIMAGE,
-      default: "62336aa1a9c02c01d7e607e0",
     },
     name: {
       type: String,

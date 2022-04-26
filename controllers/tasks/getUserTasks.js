@@ -7,7 +7,7 @@ import Task from "../../models/taskModel.js";
 export const getAllUserTasks = async (req, res, next) => {
   try {
     const user = req.user;
-    const pageSize = 10;
+    const pageSize = 20;
     const page = Number(req.query.pageNumber) || 1;
 
     const keyword = req.query.keyword
@@ -63,7 +63,7 @@ export const getTaskByPriority = async (req, res, next) => {
   try {
     const { priority } = req.params;
     const user = req.user;
-    const pageSize = 10;
+    const pageSize = 20;
     const page = Number(req.query.pageNumber) || 1;
 
     const count = await Task.countDocuments({ owner: user.id, rank: priority });

@@ -5,7 +5,7 @@ import User from "../../models/userModel.js";
 // Desc: to get all users from DB(Admins Only)
 const getUsers = async (req, res, next) => {
   try {
-    const pageSize = 10;
+    const pageSize = 20;
     const page = Number(req.query.pageNumber) || 1;
 
     const count = await User.countDocuments({});
