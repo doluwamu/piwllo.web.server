@@ -1,5 +1,6 @@
 import User from "../../models/userModel.js";
 import Task from "../../models/taskModel.js";
+import Review from "../../models/reviewModel.js";
 import AppError from "../../error/appError.js";
 
 // Request type: DELETE
@@ -10,11 +11,13 @@ const deleteUser = async (req, res, next) => {
     const { userId } = req.params;
     const user = await User.findById(userId);
     const tasks = await Task.find({ owner: userId });
+    const reviews = await Review.find({ user: userId });
 
     if (!user) {
       return next(new AppError("User does not exist", 400));
     }
     tasks.map(async (task) => await task.remove());
+    reviews.map(async (review) => await review.remove());
     await user.remove();
 
     return res.json({ message: "User successfully deleted!" });
