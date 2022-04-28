@@ -32,6 +32,11 @@ export const isAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next();
   } else {
-    return next(new AppError("Not authorized as an admin", 401));
+    return next(
+      new AppError(
+        `${req.user.name} ${req.user.isAdmin} Not authorized as an admin`,
+        401
+      )
+    );
   }
 };
