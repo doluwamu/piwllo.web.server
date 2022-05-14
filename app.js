@@ -55,7 +55,7 @@ if (NODE_ENV === "production") {
 //for invalid route
 app.use((req, res, next) => {
   return next(
-    new AppError("Specified route does not exist on this server", 404)
+    new AppError("Specified route does not exist on this server", 404),
   );
 });
 
